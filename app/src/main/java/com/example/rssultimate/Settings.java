@@ -26,7 +26,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick (View view) {
         String url = txtUrl.getText().toString();
-        url = "https://www.lemonde.fr/rss/une.xml";
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("edittext", url);
         startActivity(intent);
