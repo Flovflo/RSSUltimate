@@ -14,10 +14,17 @@ public class RSSItem {
 
     }
 
+    public RSSItem(String title,String description,String pubDate, String link) {
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.pubDate = pubDate;
+    }
 
     @Override
     public String toString() {
         return title;
 
     }
+
 }

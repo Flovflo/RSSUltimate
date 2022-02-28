@@ -2,6 +2,7 @@ package com.example.rssultimate;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.example.rssultimate.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -40,17 +42,19 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
 
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
 
 
 
+//public void onItemClick (AdapterView<?> adapterView, View view, int position, long id)
 
             @Override
             public void onClick(View view) {
                 Downloader downloader= new Downloader();
                 downloader.start();
 
-                Snackbar.make(view, "ca a refresh BROOOO", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Refresh", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -58,7 +62,18 @@ public class MainActivity extends AppCompatActivity {
     class Downloader extends Thread{
         @Override
         public void run() {
-            String url = "https://www.lemonde.fr/rss/une.xml";
+            Intent intent = getIntent();
+            String url = null;
+            if (intent != null){
+                url="";
+                if (intent.hasExtra("edittext")) {
+                    url = intent.getStringExtra("edittext");
+                }
+            }
+
+
+
+            //String url = "https://www.lemonde.fr/rss/une.xml";
             ArrayList<RSSItem> news = new ArrayList<>();
             try {
                 InputStream stream = new URL(url).openConnection().getInputStream();
@@ -110,6 +125,12 @@ public class MainActivity extends AppCompatActivity {
                     new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, news);
             ListView listView = findViewById(R.id.list_news);
             listView.setAdapter(itemsAdapter);
+
+
+                listView.setOnItemClickListener((adapterView, view, i, l)->{
+                        Intent browserIntent = new Intent (Intent.ACTION_VIEW, Uri.parse (news.get(i).link));
+                startActivity(browserIntent);
+            });
 
         });
 
