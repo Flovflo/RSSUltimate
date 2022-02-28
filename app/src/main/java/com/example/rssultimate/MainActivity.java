@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
 
-
-
-//public void onItemClick (AdapterView<?> adapterView, View view, int position, long id)
-
             @Override
             public void onClick(View view) {
                 Downloader downloader= new Downloader();
@@ -58,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
     class Downloader extends Thread{
         @Override
@@ -65,12 +63,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             String url = null;
             if (intent != null){
-                url="";
+                url = "https://www.lemonde.fr/rss/une.xml";
                 if (intent.hasExtra("edittext")) {
                     url = intent.getStringExtra("edittext");
                 }
             }
-
 
 
             //String url = "https://www.lemonde.fr/rss/une.xml";
